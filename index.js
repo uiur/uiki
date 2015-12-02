@@ -1,4 +1,5 @@
 const express = require('express')
+const path = require('path')
 const app = express()
 const mongoose = require('mongoose')
 mongoose.Promise = require('bluebird')
@@ -33,7 +34,16 @@ router.post('/items', (req, res) => {
   })
 })
 
+router.get('/items/:id', (req, res) => {
+  Item.findById(req.params.id)
+    .then(res.json.bind(res))
+})
+
 app.use('/api', router)
+
+app.get('*', function (req, res) {
+  res.sendFile(path.resolve(__dirname, 'public', 'index.html'))
+})
 
 db.once('open', () => {
   app.listen(3000)

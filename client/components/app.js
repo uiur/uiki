@@ -1,5 +1,6 @@
 const React = require('react')
 const request = require('axios')
+const { Link } = require('react-router')
 
 class App extends React.Component {
   constructor () {
@@ -48,7 +49,11 @@ class App extends React.Component {
         <ul>
           {
             this.state.items.map((item) => {
-              return <li>{ item.body }</li>
+              return (
+                <li key={ item._id }>
+                  <Link to={ '/' + item._id }>{ item.body }</Link>
+                </li>
+              )
             })
           }
         </ul>
