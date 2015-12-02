@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "standard",
-    "build": "browserify client/index.js -o public/bundle.js -t [ babelify ]"
+    "build": "browserify client/index.js -o public/bundle.js -t [ babelify ]",
+    "watch": "watchify client/index.js -o public/bundle.js -t [ babelify ]"
   },
   "keywords": [],
   "author": "",
@@ -25,6 +26,7 @@
     "es6-promise": "^3.0.2",
     "react": "^0.14.3",
     "react-dom": "^0.14.3",
-    "standard": "^5.4.1"
+    "standard": "^5.4.1",
+    "watchify": "^3.6.1"
   }
 }
