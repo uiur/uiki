@@ -6,7 +6,8 @@ class Item extends React.Component {
     super()
 
     this.state = {
-      item: {}
+      item: {},
+      value: ''
     }
   }
 
@@ -17,8 +18,22 @@ class Item extends React.Component {
   fetch (id) {
     return request.get(`/api/items/${id}`)
       .then(({ data }) => {
-        this.setState({ item: data })
+        this.setState({ item: data, value: data.body })
       })
+  }
+
+  patch (id, data) {
+    return request.patch(`/api/items/${id}`, data)
+      .then(({ data }) => {
+        this.setState({ item: data, value: data.body })
+      })
+  }
+
+  onKeyDown (e) {
+    if (e.key === 'Enter') {
+      this.patch(this.state.item._id, { body: e.target.value })
+      return
+    }
   }
 
   render () {
@@ -26,6 +41,10 @@ class Item extends React.Component {
       <article>
         <p>{ this.props.params.id }</p>
         <p>{ this.state.item.body }</p>
+        <input type='text'
+               value={ this.state.value }
+               onChange={ (e) => this.setState({ value: e.target.value }) }
+               onKeyDown={ this.onKeyDown.bind(this) } />
       </article>
     )
   }
