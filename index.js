@@ -39,6 +39,12 @@ router.get('/items/:id', (req, res) => {
     .then(res.json.bind(res))
 })
 
+router.patch('/items/:id', (req, res) => {
+  Item.findByIdAndUpdate(req.params.id, { $set: req.body })
+    .then(() => { return Item.findById(req.params.id) })
+    .then(res.json.bind(res))
+})
+
 app.use('/api', router)
 
 app.get('*', function (req, res) {
