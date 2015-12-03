@@ -1,6 +1,10 @@
 const React = require('react')
 const request = require('axios')
 const Textarea = require('react-textarea-autosize')
+const md = require('markdown-it')({
+  linkify: true,
+  typographer: true
+})
 
 class Item extends React.Component {
   constructor () {
@@ -38,7 +42,7 @@ class Item extends React.Component {
     return (
       <article>
         <p>{ this.props.params.id }</p>
-        <pre>{ this.state.item.body }</pre>
+        <div dangerouslySetInnerHTML={ { __html: md.render(this.state.item.body || '') } } />
 
         <Textarea style={ { width: 400 } }
                   value={ this.state.value }

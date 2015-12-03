@@ -15,6 +15,7 @@
     "bluebird": "^3.0.6",
     "body-parser": "^1.14.1",
     "express": "^4.13.3",
+    "markdown-it": "^5.0.2",
     "mongoose": "^4.2.8",
     "react-textarea-autosize": "^3.2.0"
   },
