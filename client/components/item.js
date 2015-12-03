@@ -1,5 +1,6 @@
 const React = require('react')
 const request = require('axios')
+const Textarea = require('react-textarea-autosize')
 
 class Item extends React.Component {
   constructor () {
@@ -29,22 +30,20 @@ class Item extends React.Component {
       })
   }
 
-  onKeyDown (e) {
-    if (e.key === 'Enter') {
-      this.patch(this.state.item._id, { body: e.target.value })
-      return
-    }
+  save () {
+    this.patch(this.state.item._id, { body: this.state.value })
   }
 
   render () {
     return (
       <article>
         <p>{ this.props.params.id }</p>
-        <p>{ this.state.item.body }</p>
-        <input type='text'
-               value={ this.state.value }
-               onChange={ (e) => this.setState({ value: e.target.value }) }
-               onKeyDown={ this.onKeyDown.bind(this) } />
+        <pre>{ this.state.item.body }</pre>
+
+        <Textarea style={ { width: 400 } }
+                  value={ this.state.value }
+                  onChange={ (e) => this.setState({ value: e.target.value }) } />
+        <button onClick={ this.save.bind(this) }>Save</button>
       </article>
     )
   }
