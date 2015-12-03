@@ -5,6 +5,7 @@ const md = require('markdown-it')({
   linkify: true,
   typographer: true
 })
+md.use(require('markdown-it-emoji'))
 
 class Item extends React.Component {
   constructor () {
