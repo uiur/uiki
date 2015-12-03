@@ -14,6 +14,7 @@
   "dependencies": {
     "bluebird": "^3.0.6",
     "body-parser": "^1.14.1",
+    "bson-objectid": "^1.1.3",
     "express": "^4.13.3",
     "markdown-it": "^5.0.2",
     "markdown-it-emoji": "^1.1.0",

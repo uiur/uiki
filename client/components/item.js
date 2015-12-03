@@ -14,7 +14,8 @@ class Item extends React.Component {
 
     this.state = {
       item: {},
-      value: ''
+      value: '',
+      name: null
     }
   }
 
@@ -25,31 +26,47 @@ class Item extends React.Component {
   fetch (id) {
     return request.get(`/api/items/${id}`)
       .then(({ data }) => {
-        this.setState({ item: data, value: data.body })
+        this.setState({ item: data, value: data.body, name: data.name })
       })
   }
 
   patch (id, data) {
     return request.patch(`/api/items/${id}`, data)
       .then(({ data }) => {
-        this.setState({ item: data, value: data.body })
+        this.setState({ item: data, value: data.body, name: data.name })
       })
   }
 
   save () {
-    this.patch(this.state.item._id, { body: this.state.value })
+    this.patch(this.state.item._id, {
+      name: this.state.name || undefined,
+      body: this.state.value
+    })
   }
 
   render () {
+    const { item } = this.state
+
     return (
       <article>
-        <p>{ this.props.params.id }</p>
+        {
+          item.name &&
+            <a href={ `/${item.name}` }>{ item.name }</a>
+        }
+
         <div dangerouslySetInnerHTML={ { __html: md.render(this.state.item.body || '') } } />
 
-        <Textarea style={ { width: 400 } }
-                  value={ this.state.value }
-                  onChange={ (e) => this.setState({ value: e.target.value }) } />
-        <button onClick={ this.save.bind(this) }>Save</button>
+        <input type='text'
+               value={ this.state.name }
+               onChange={ (e) => this.setState({ name: e.target.value }) }/>
+
+        <div>
+          <Textarea style={ { width: 400 } }
+                    value={ this.state.value }
+                    onChange={ (e) => this.setState({ value: e.target.value }) } />
+          <button onClick={ this.save.bind(this) }>Save</button>
+
+        </div>
       </article>
     )
   }

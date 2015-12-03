@@ -5,9 +5,12 @@ const mongoose = require('mongoose')
 mongoose.Promise = require('bluebird')
 mongoose.connect('mongodb://localhost/test')
 
+const ObjectId = require('bson-objectid')
+
 const db = mongoose.connection
 
 const itemSchema = mongoose.Schema({
+  name: String,
   body: String
 })
 
@@ -35,7 +38,11 @@ router.post('/items', (req, res) => {
 })
 
 router.get('/items/:id', (req, res) => {
-  Item.findById(req.params.id)
+  const query = ObjectId.isValid(req.params.id)
+    ? { _id: req.params.id }
+    : { name: req.params.id }
+
+  Item.findOne(query)
     .then(res.json.bind(res))
 })
 
