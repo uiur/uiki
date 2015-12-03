@@ -3,7 +3,8 @@ const request = require('axios')
 const Textarea = require('react-textarea-autosize')
 const md = require('markdown-it')({
   linkify: true,
-  typographer: true
+  typographer: true,
+  breaks: true
 })
 md.use(require('markdown-it-emoji'))
 
